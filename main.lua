@@ -9,7 +9,6 @@ return {
     [4581966615] = function() -- anomic
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/anomic%20v.lua"))()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/anomic%20printer%20esp.lua"))()
-        end)
     end,
     [4169490976] = function() -- mortem SHIT
         local url = "https://raw.githubusercontent.com/jehheb12u11aaaaz/1z1rewgy4wer-tgerjfuwqehuofhweuifhegryhr4tyhr/main/mmtfwerhfugbr3gfbfbi3refgiergfberigfer"
@@ -38,5 +37,5 @@ return {
     end,
     ["uniHBE"] = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/uniHBE.lua"))()
-    end
+    end,
 }
