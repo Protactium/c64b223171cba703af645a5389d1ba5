@@ -48,6 +48,7 @@ return {
     end,
     ["uniHBE"] = function()
         local localPlayer = game:GetService('Players').LocalPlayer
+
         local function scaleHitbox(character)
             if character then
                 local head = character:FindFirstChild("Head")
@@ -68,7 +69,7 @@ return {
         
                 if humanoidRootPart then
                     humanoidRootPart.Size = _G.HumanoidRootPartSize
-                    humanoidRootPart.Transparency = 1
+                    humanoidRootPart.Transparency = 0.7
                     humanoidRootPart.BrickColor = BrickColor.new("Really blue")
                     humanoidRootPart.Material = "Neon"
                     humanoidRootPart.CanCollide = false
@@ -85,10 +86,8 @@ return {
                 local newHead = Instance.new("Part")
                 newHead.Name = "Head"
                 newHead.Size = _G.HeadSize
-        	newHead.Transparency = 1
                 newHead.Parent = character
             else
-        	head.Transparency = 1
                 head.Size = _G.HeadSize
                 head.CanCollide = false -- Disable collision for the head
             end
