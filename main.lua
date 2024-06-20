@@ -10,7 +10,7 @@ return {
         while wait(5) do
             for i,v in pairs(game:GetService("Workspace").Entities:GetChildren()) do
                 if string.find(v.Name:lower(), "print") then
-                    if v:FindFirstChild("HAHAHAHAAH") then v:Destroy() end
+                    if v:FindFirstChild("HAHAHAHAAH",true) then v:FindFirstChild("HAHAHAHAAH",true).Adornee = nil;v:FindFirstChild("HAHAHAHAAH",true):Destroy() end
                     local printer = v:FindFirstChildOfClass("Part")
                     local esp = Instance.new("BillboardGui")
                     local text = Instance.new("TextLabel")
