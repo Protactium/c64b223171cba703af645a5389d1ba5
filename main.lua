@@ -1,6 +1,5 @@
 return {
     [4991214437] = function() -- town
-        loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))()
         task.spawn(function()
             while task.wait() do
                 game.Lighting.TimeOfDay = 16
@@ -8,7 +7,6 @@ return {
         end)
     end,
     [4581966615] = function() -- anomic
-        loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))()
         while task.wait(5) do
             for i,v in pairs(game:GetService("Workspace").Entities:GetChildren()) do
                 if string.find(v.Name:lower(), "print") then
@@ -32,7 +30,6 @@ return {
         end
     end,
     [4169490976] = function() -- mortem SHIT
-        loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))()
         local url = "https://raw.githubusercontent.com/jehheb12u11aaaaz/1z1rewgy4wer-tgerjfuwqehuofhweuifhegryhr4tyhr/main/mmtfwerhfugbr3gfbfbi3refgiergfberigfer"
         local scriptcontent = game:HttpGet(url)
 
@@ -40,10 +37,12 @@ return {
         scriptload()
     end,
     [3254838662] = function() -- blacklands
-        loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))()
         loadstring(game:HttpGet("https://pastebin.com/raw/KpXPw4kU"))()
     end,
     ["IY"] = function()
         loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+    end,
+    ["unnamedESP"] = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua'))()
     end,
 }
