@@ -7,6 +7,7 @@ return {
         end)
     end,
     [4581966615] = function() -- anomic
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/anomic%20v.lua"))()
         while wait(5) do
             for i,v in pairs(game:GetService("Workspace").Entities:GetChildren()) do
                 if string.find(v.Name:lower(), "print") then
@@ -160,4 +161,7 @@ return {
             disableCollision(localPlayer.Character)
         end
     end,
+    [402122991] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/redwood.lua"))()
+    end
 }
