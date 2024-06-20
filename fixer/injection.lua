@@ -1,6 +1,3 @@
-SCRIPT FOR SOLARA INJECTION : 
-
-
 local bit = bit32
 function ToEnum(a)
  for i, v in pairs(Enum.KeyCode:GetEnumItems()) do if tostring(v) == a then return v end end
