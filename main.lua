@@ -41,6 +41,15 @@ return {
     [3254838662] = function() -- blacklands
         loadstring(game:HttpGet("https://pastebin.com/raw/KpXPw4kU"))()
     end,
+    [402122991] = function() -- redwood
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/redwood.lua"))()
+    end,
+
+
+
+
+
+    
     ["IY"] = function()
         loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
     end,
@@ -160,8 +169,5 @@ return {
         if localPlayer.Character then
             disableCollision(localPlayer.Character)
         end
-    end,
-    [402122991] = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/redwood.lua"))()
     end
 }
