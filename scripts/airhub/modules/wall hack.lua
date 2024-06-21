@@ -1,11 +1,3 @@
---[[
-
-	Wall Hack Module [AirHub] by Exunys © CC0 1.0 Universal (2023)
-
-	https://github.com/Exunys
-
-]]
-
 --// Cache
 
 local select, next, tostring, pcall, getgenv, setmetatable, mathfloor, mathabs, mathcos, mathsin, mathrad, wait = select, next, tostring, pcall, getgenv, setmetatable, math.floor, math.abs, math.cos, math.sin, math.rad, task.wait
