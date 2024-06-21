@@ -51,7 +51,7 @@ end
 
 
 
-local Debug = loadstring(game:HttpGet('https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/solara.fixer/basic_funcs.lua'))()
+local Debug = loadstring(game:HttpGet('https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/scripts/solara.fixer/basic_funcs.lua'))()
 
 --[[ Libraries ]]
 
