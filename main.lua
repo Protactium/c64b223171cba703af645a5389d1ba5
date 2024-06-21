@@ -37,4 +37,7 @@ return {
     ["solaraFix"] = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/scripts/solara.fixer/injection.lua"))()
     end,
+    ["airhub"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/scripts/airhub/main.lua"))()
+    end,
 }
