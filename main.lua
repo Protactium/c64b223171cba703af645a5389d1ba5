@@ -11,11 +11,7 @@ return {
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/anomic%20v.lua"))()
     end,
     [4169490976] = function() -- mortem SHIT
-        local url = "https://raw.githubusercontent.com/jehheb12u11aaaaz/1z1rewgy4wer-tgerjfuwqehuofhweuifhegryhr4tyhr/main/mmtfwerhfugbr3gfbfbi3refgiergfberigfer"
-        local scriptcontent = game:HttpGet(url)
-
-        local scriptload = loadstring(scriptcontent)
-        scriptload()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/mortem-1.lua"))()
     end,
     [3254838662] = function() -- blacklands
         loadstring(game:HttpGet("https://pastebin.com/raw/KpXPw4kU"))()
