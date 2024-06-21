@@ -1,5 +1,3 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/solara.fixer/injection.lua"))() -- solara fixer yeah
-
 return {
     [4991214437] = function() -- town
         task.spawn(function()
@@ -39,5 +37,8 @@ return {
     end,
     ["uniHBE"] = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/uniHBE.lua"))()
-    end
+    end,
+    ["solaraFix"] = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/solara.fixer/injection.lua"))()
+    end,
 }
