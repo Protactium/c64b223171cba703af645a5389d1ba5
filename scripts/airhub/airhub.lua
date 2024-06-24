@@ -25,7 +25,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171
 
 --// Variables
 
-local Library = loadstring(game:GetObjects("rbxassetid://7657867786")[1].Source)() -- Pepsi's UI Library
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/libraries/ui/pepsi.lua"))() -- Pepsi's UI Library
 local Aimbot, WallHack = getgenv().AirHub.Aimbot, getgenv().AirHub.WallHack
 local Parts, Fonts, TracersType = {"Head", "HumanoidRootPart", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg", "LeftHand", "RightHand", "LeftLowerArm", "RightLowerArm", "LeftUpperArm", "RightUpperArm", "LeftFoot", "LeftLowerLeg", "UpperTorso", "LeftUpperLeg", "RightFoot", "RightLowerLeg", "LowerTorso", "RightUpperLeg"}, {"UI", "System", "Plex", "Monospace"}, {"Bottom", "Center", "Mouse"}
 
