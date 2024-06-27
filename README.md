@@ -15,4 +15,4 @@
 
 # Information:
 > This has some scripts that i've used and work with solara, if you want to use game specific scripts that are in the lib, do:
-amazing[game.PlaceId]()
+> amazing[game.PlaceId]()
