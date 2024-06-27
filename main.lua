@@ -16,7 +16,7 @@ return {
     [3254838662] = function() -- blacklands
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/scripts/blackland.lua"))()
     end,
-    [402122991] = function() -- redwood
+    [402122991] = function() -- redwood (shittier version of that OP ass redwood prison script)
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/scripts/redwood.lua"))()
     end,
 
