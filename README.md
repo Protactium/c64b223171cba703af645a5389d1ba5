@@ -7,8 +7,8 @@
 
 
 # Params:
-## .IY() -- infinite yield
-## .unnamedESP() - unnamed esp
-## .uniHBE() - universal hitbox expander
-## .solaraFix() - add custom functions to solara, fixes some scripts
-## .airhub() - universal aimlock
+### .IY() -- infinite yield
+### .unnamedESP() - unnamed esp
+### .uniHBE() - universal hitbox expander
+### .solaraFix() - add custom functions to solara, fixes some scripts
+### .airhub() - universal aimlock
