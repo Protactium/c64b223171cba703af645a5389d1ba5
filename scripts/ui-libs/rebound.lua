@@ -615,13 +615,34 @@ function tab:addCategory(name)
 		}),
 		_items = {},
 	}, cell)
+	
+	newCategory._button:SetAttribute("enabled", newCategory._frame.Visible)
 
 	autoResizeList(newCategory._frame,0)
+
+	newCategory._button.MouseEnter:Connect(function()
+		if not newCategory._button:GetAttribute("enabled") then
+			tween(newCategory._button, 0.125, {BackgroundColor3 = Color3.fromRGB(91,91,91)})
+			tween(newCategory._button.UIStroke, 0.125, {Color = Color3.fromRGB(184,184,184), Thickness = 1})
+			tween(newCategory._button.Icon, 0.125, {ImageColor3 = Color3.fromRGB(255,255,255)})
+			tween(newCategory._button.Title, 0.125, {TextColor3 = Color3.fromRGB(255,255,255)})
+		end
+	end)
+	
+	newCategory._button.MouseLeave:Connect(function()
+		if not newCategory._button:GetAttribute("enabled") then
+			tween(newCategory._button, 0.125, {BackgroundColor3 = Color3.fromRGB(47,47,47)})
+			tween(newCategory._button.UIStroke, 0.125, {Color = Color3.fromRGB(49,49,49), Thickness = 2})
+			tween(newCategory._button.Icon, 0.125, {ImageColor3 = Color3.fromRGB(168,168,168)})
+			tween(newCategory._button.Title, 0.125, {TextColor3 = Color3.fromRGB(168,168,168)})
+		end
+	end)
 
 	newCategory._button.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			for i,v in next, self._page.SectionButtonContainer:GetChildren() do
 				if v:IsA("Frame") then
+					v:SetAttribute("enabled",false)
 					tween(v, 0.125, {BackgroundColor3 = Color3.fromRGB(47,47,47)})
 					tween(v.UIStroke, 0.125, {Color = Color3.fromRGB(49,49,49), Thickness = 2})
 					tween(v.Icon, 0.125, {ImageColor3 = Color3.fromRGB(168,168,168)})
@@ -637,7 +658,8 @@ function tab:addCategory(name)
 			tween(newCategory._button.UIStroke, 0.125, {Color = Color3.fromRGB(184,184,184), Thickness = 1})
 			tween(newCategory._button.Icon, 0.125, {ImageColor3 = Color3.fromRGB(255,255,255)})
 			tween(newCategory._button.Title, 0.125, {TextColor3 = Color3.fromRGB(255,255,255)})
-
+			
+			newCategory._button:SetAttribute("enabled",true)
 			newCategory._frame.Visible = true
 		end
 	end)
@@ -669,7 +691,7 @@ function library.new(name)
 					create("ImageLabel", {Name = "Headshot", Size = UDim2.fromOffset(44,44), Position = UDim2.fromOffset(48,12), BackgroundTransparency = 1}, {
 						create("UICorner", {CornerRadius = UDim.new(1,0)}),
 						create("TextLabel", {Name = "Title1", BackgroundTransparency = 1, Size = UDim2.fromOffset(127,16), Position = UDim2.fromOffset(53,6), TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Center, Text = "ROBLOX", TextColor3 = Color3.fromRGB(255,255,255), TextScaled = true, TextSize = 14}),
-						create("TextLabel", {Name = "Title2", BackgroundTransparency = 1, Size = UDim2.fromOffset(147,14), Position = UDim2.fromOffset(53,23), TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Center, Text = "FREE", TextColor3 = Color3.fromRGB(143,143,143), TextScaled = true, TextSize = 14})
+						create("TextLabel", {Name = "Title2", BackgroundTransparency = 1, Size = UDim2.fromOffset(147,14), Position = UDim2.fromOffset(53,23), TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Center, Text = "Free", TextColor3 = Color3.fromRGB(143,143,143), TextScaled = true, TextSize = 14})
 					})
 				}),
 
@@ -862,7 +884,7 @@ function library:createPage(name, icon)
 				v.Visible = false
 			end
 		end
-		--104, 104, 104
+		
 		for i,v in next, sidePanel:GetChildren() do
 			if v:IsA("TextButton") then
 				tween(v, .125, {BackgroundTransparency = 1})
