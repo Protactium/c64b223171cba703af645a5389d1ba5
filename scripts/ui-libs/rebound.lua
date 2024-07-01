@@ -93,17 +93,17 @@ library._settings = {
 -- functions
 local function create(className, properties, children)
 	local instance, properties = Instance.new(className), properties or {}
-	
+
 	for i,v in next, properties do
 		instance[i] = v
 	end
-	
+
 	if children then
 		for i,v in next, children do
 			v.Parent = instance
 		end
 	end
-	
+
 	return instance
 end
 
@@ -146,7 +146,7 @@ end
 local function autoResizeList(frame, extra)
 	extra = extra or 0
 	local isScrollable,layout = frame.ClassName == "ScrollingFrame", frame:FindFirstChildOfClass("UIListLayout")
-	
+
 	local function resize()
 		local size, offset = 0, layout.Padding.Offset
 		for i, v in next, frame:GetChildren() do
@@ -158,7 +158,7 @@ local function autoResizeList(frame, extra)
 		end
 		frame[isScrollable and "CanvasSize" or "Size"] = UDim2.new(0, isScrollable and 0 or frame.AbsoluteSize.X, 0, (size - offset) + extra)
 	end
-	
+
 	frame.ChildAdded:Connect(function(child)
 		child:GetPropertyChangedSignal("AbsoluteSize"):Connect(resize)
 		resize()
@@ -217,7 +217,7 @@ end
 
 function misc:addInput(name, callback)
 	name = name or "Textbox"
-	
+
 	local textBox = {
 		_class = "Textbox",
 		_callback = callback or function() end,
@@ -230,13 +230,13 @@ function misc:addInput(name, callback)
 			create("TextLabel", {Name = "Context", Text = name, BackgroundTransparency = 1, Size = UDim2.fromOffset(164,10), Position = UDim2.fromOffset(24,7), TextColor3 = Color3.fromRGB(143,143,143), TextScaled = true, TextXAlignment = Enum.TextXAlignment.Left, FontFace = Font.fromId(16658254058, Enum.FontWeight.Medium)})
 		})
 	}
-	
+
 	textBox._frame.Box.Input.FocusLost:Connect(function()
 		callback(textBox._frame.Box.Input.Text)
 	end)
 
 	self._items[#self._items + 1] = textBox
-	
+
 	return textBox
 end
 
@@ -244,7 +244,7 @@ function misc:addSlider(name, callback, options)
 	local min = options and options.min or 0
 	local max = options and options.max or 100
 	local float = options and options.float or 1
-	
+
 	local slider = {
 		_callback = callback or function() end,
 		_class = "slider",
@@ -267,7 +267,7 @@ function misc:addSlider(name, callback, options)
 			value = min
 		}
 	}
-	
+
 	function slider:Set(value)
 		value = math.clamp(round(value, float), min, max)
 		if value ~= self._status.value then
@@ -277,7 +277,7 @@ function misc:addSlider(name, callback, options)
 			self._callback(value)
 		end
 	end
-	
+
 	slider._frame.Box.Input.FocusLost:Connect(function()
 		local text = slider._frame.Box.Input.Text
 		if tonumber(text) then
@@ -296,7 +296,7 @@ function misc:addSlider(name, callback, options)
 			slider:Set(math.floor(options.max / 2))
 		end
 	end)
-	
+
 	slider._frame.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 and library._settings.dragging == false then
 			library._settings.dragging = true
@@ -313,13 +313,13 @@ function misc:addSlider(name, callback, options)
 			end)
 		end
 	end)
-	
+
 	if options and options.default then
 		slider:Set(options.default)
 	end
 
 	self._items[#self._items + 1] = slider
-	
+
 	return slider
 end
 
@@ -339,14 +339,14 @@ function misc:addBind(name, callback, options)
 			value = ""
 		}
 	}
-	
+
 	function bind:Set(value)
 		local escaped = (value == "Escape" or value == "")
 		self._status.value = escaped and "" or value
 		self._frame.Box.Input.Text = `[ {escaped and "None" or value} ]`
 		self._frame.Box.Input.TextColor3 = Color3.fromRGB(120,120,120)
 	end
-	
+
 	bind._frame.Box.MouseButton1Click:Connect(function()
 		if not library._settings.binding  then
 			library._settings.binding = true
@@ -364,13 +364,13 @@ function misc:addBind(name, callback, options)
 			library._settings.binding = false
 		end
 	end)
-	
+
 	if options and options.default then
 		bind:Set(options.default.Name)
 	end
-	
+
 	self._items[#self._items + 1] = bind
-	
+
 	return bind
 end
 
@@ -391,15 +391,15 @@ function misc:addToggle(name, callback, options)
 			enabled = false
 		}
 	}
-	
+
 	function toggle:set(value)
 		tween(self._frame.ToggleHolder.Circle, .2, {BackgroundTransparency = value and 0 or 0.5, Position = value and UDim2.fromOffset(32,3) or UDim2.fromOffset(2,3)})
 		tween(self._frame.ToggleHolder, .2, {BackgroundTransparency = value and 0 or 0.5})
-		
+
 		self._status.enabled = value
 		self._callback(value)
 	end
-	
+
 	toggle._frame.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			toggle:set(not toggle._status.enabled)
@@ -409,9 +409,9 @@ function misc:addToggle(name, callback, options)
 	if options and options.default then
 		toggle:set(true)
 	end
-	
+
 	self._items[#self._items + 1] = toggle
-	
+
 	return toggle
 end
 
@@ -425,7 +425,7 @@ function misc:addButton(name, callback)
 			create("TextLabel", {Name = "Context", Text = name, BackgroundTransparency = 1, Size = UDim2.fromScale(1,1), TextColor3 = Color3.fromRGB(143,143,143), TextSize = 11, TextXAlignment = Enum.TextXAlignment.Center, FontFace = Font.fromId(16658254058, Enum.FontWeight.Medium)})
 		})
 	}
-	
+
 	button._frame.MouseEnter:Connect(function()
 		tween(button._frame, 0.125, {BackgroundColor3 = Color3.fromRGB(80,80,80)})
 		tween(button._frame.UIStroke, 0.125, {Thickness = 1, Color = Color3.fromRGB(150,150,150)})
@@ -438,11 +438,11 @@ function misc:addButton(name, callback)
 		tween(button._frame.Context, 0.125, {TextColor3 = Color3.fromRGB(143,143,143)})
 		tween(button._frame.Icon, 0.125, {ImageColor3 = Color3.fromRGB(135,135,135)})
 	end)
-	
+
 	button._frame.MouseButton1Click:Connect(button._callback)
-	
+
 	self._items[#self._items + 1] = button
-	
+
 	return button
 end
 
@@ -468,7 +468,7 @@ function misc:addDropdown(name, callback, list, options)
 		},
 		_open = false
 	}
-	
+
 	local function findInList(value)
 		for _,x in next, list do
 			if x.Name == value then
@@ -477,7 +477,7 @@ function misc:addDropdown(name, callback, list, options)
 		end
 		return false
 	end
-	
+
 	function dropdown:Set(Type,value)
 		if value == "" or findInList(value) then
 			local txt = tostring(value)
@@ -516,10 +516,10 @@ function misc:addDropdown(name, callback, list, options)
 						}),
 						_open = false
 					}
-					
+
 					item._item.MouseButton1Click:Connect(function()
 						item._open = not item._open
-						
+
 						if item._open then
 							tween(item._item.ToggleHolder.Highlight, 0.125, {Transparency = 0.5})
 							dropdown:Set("toggle",v.Name)
@@ -532,14 +532,14 @@ function misc:addDropdown(name, callback, list, options)
 			end
 		end
 	end
-	
+
 	function dropdown:UpdateItems(items)
 		for i,v in next, dropdown._frame.list:GetChildren() do
 			if v.ClassName == "ImageButton" then
 				v:Destroy()
 			end
 		end
-		
+
 		createItems(items)
 
 		tween(dropdown._frame, 0.125, {Size = UDim2.fromOffset(264,20)})
@@ -549,9 +549,9 @@ function misc:addDropdown(name, callback, list, options)
 		if dropdown._status.value ~= "" and not findInList(dropdown._status.value) then
 			dropdown:Set("button","")
 		end
-		
+
 	end
-	
+
 	dropdown._frame.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			dropdown._open = not dropdown._open
@@ -564,17 +564,17 @@ function misc:addDropdown(name, callback, list, options)
 			end
 		end
 	end)
-	
+
 	autoResizeList(dropdown._frame:FindFirstChildOfClass("ScrollingFrame"),20)
-	
+
 	createItems(list)
-	
+
 	if options and options.default then
 		dropdown:Set(options.default.Type,options.default.Name)
 	end
-	
+
 	self._items[#self._items + 1] = dropdown
-	
+
 	return dropdown
 end
 
@@ -589,11 +589,11 @@ function cell:addCell()
 		}),
 		_items = {},
 	}, misc)
-	
+
 	autoResizeList(newCell._cell, 35)
-	
+
 	self._items[#self._items + 1] = newCell
-	
+
 	return newCell
 end
 
@@ -615,9 +615,9 @@ function tab:addCategory(name)
 		}),
 		_items = {},
 	}, cell)
-	
+
 	autoResizeList(newCategory._frame,0)
-	
+
 	newCategory._button.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			for i,v in next, self._page.SectionButtonContainer:GetChildren() do
@@ -628,22 +628,22 @@ function tab:addCategory(name)
 					tween(v.Title, 0.125, {TextColor3 = Color3.fromRGB(168,168,168)})
 				end
 			end
-			
+
 			for i,v in next, self._page.Sections:GetChildren() do
 				v.Visible = false
 			end
-			
+
 			tween(newCategory._button, 0.125, {BackgroundColor3 = Color3.fromRGB(91,91,91)})
 			tween(newCategory._button.UIStroke, 0.125, {Color = Color3.fromRGB(184,184,184), Thickness = 1})
 			tween(newCategory._button.Icon, 0.125, {ImageColor3 = Color3.fromRGB(255,255,255)})
 			tween(newCategory._button.Title, 0.125, {TextColor3 = Color3.fromRGB(255,255,255)})
-			
+
 			newCategory._frame.Visible = true
 		end
 	end)
-	
+
 	self._items[#self._items + 1] = newCategory
-	
+
 	return newCategory
 end
 
@@ -657,7 +657,7 @@ function library.new(name)
 				-- ui stuff
 				create("UIStroke", {Color = Color3.fromRGB(49,49,49), Thickness = 2, Transparency = 0.3, ApplyStrokeMode = Enum.ApplyStrokeMode.Border}),
 				create("UICorner", {CornerRadius = UDim.new(0.025,0)}),
-				
+
 				-- lines
 				create("Frame", {Name = "Line", BackgroundColor3 = Color3.fromRGB(43,43,43), Size = UDim2.fromOffset(4,632), Position = UDim2.fromOffset(274,0), BorderSizePixel = 0, BackgroundTransparency = 0.5}),
 				create("Frame", {Name = "Line", BackgroundColor3 = Color3.fromRGB(43,43,43), Size = UDim2.fromOffset(557,2), Position = UDim2.fromOffset(279,60), BorderSizePixel = 0, BackgroundTransparency = 0.5}),
@@ -669,16 +669,16 @@ function library.new(name)
 					create("ImageLabel", {Name = "Headshot", Size = UDim2.fromOffset(44,44), Position = UDim2.fromOffset(48,12), BackgroundTransparency = 1}, {
 						create("UICorner", {CornerRadius = UDim.new(1,0)}),
 						create("TextLabel", {Name = "Title1", BackgroundTransparency = 1, Size = UDim2.fromOffset(127,16), Position = UDim2.fromOffset(53,6), TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Center, Text = "ROBLOX", TextColor3 = Color3.fromRGB(255,255,255), TextScaled = true, TextSize = 14}),
-						create("TextLabel", {Name = "Title2", BackgroundTransparency = 1, Size = UDim2.fromOffset(147,14), Position = UDim2.fromOffset(53,23), TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Center, Text = "Free", TextColor3 = Color3.fromRGB(143,143,143), TextScaled = true, TextSize = 14})
+						create("TextLabel", {Name = "Title2", BackgroundTransparency = 1, Size = UDim2.fromOffset(147,14), Position = UDim2.fromOffset(53,23), TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Center, Text = "FREE", TextColor3 = Color3.fromRGB(143,143,143), TextScaled = true, TextSize = 14})
 					})
 				}),
-				
+
 				-- side panel
 				create("ScrollingFrame", {Name = "SidePanel", Size = UDim2.fromOffset(267,401), Position = UDim2.fromOffset(0,142), BackgroundTransparency = 1, ScrollBarImageColor3 = Color3.fromRGB(54,54,54), ScrollBarThickness = 4, CanvasSize = UDim2.fromOffset(0,0), BorderSizePixel = 0}, {
 					create("UIPadding", {PaddingLeft = UDim.new(0,30), PaddingTop = UDim.new(0,5)}),
 					create("UIListLayout", {HorizontalAlignment = Enum.HorizontalAlignment.Left, VerticalAlignment = Enum.VerticalAlignment.Top, Padding = UDim.new(0,15), FillDirection = Enum.FillDirection.Vertical, SortOrder = Enum.SortOrder.LayoutOrder}),
 				}),
-				
+
 				-- search bar
 				create("Frame", {Name = "SearchBar", Size = UDim2.fromOffset(200,35), Position = UDim2.fromOffset(18,59), BackgroundColor3 = Color3.fromRGB(47,47,47), BackgroundTransparency = 0.5}, {
 					create("UIStroke", {Color = Color3.fromRGB(49,49,49), Thickness = 2, Transparency = 0.3, ApplyStrokeMode = Enum.ApplyStrokeMode.Border}),
@@ -686,7 +686,7 @@ function library.new(name)
 					create("TextBox", {Name = "Input", Size = UDim2.fromOffset(153,13), Position = UDim2.fromOffset(41,10), PlaceholderText = "Search...", TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Center, TextColor3 = Color3.fromRGB(136,136,138), TextSize = 14, TextScaled = true, BackgroundTransparency = 1, Text = ""}),
 					create("ImageLabel", {Name = "Icon", Size = UDim2.fromOffset(14,14), Position = UDim2.fromOffset(16,9), BackgroundTransparency = 1, Image = "rbxassetid://6031154871", ImageColor3 = Color3.fromRGB(177,177,177)})
 				}),
-				
+
 				-- title
 				create("TextLabel", {Name = "title", Text = name, TextScaled = true, TextSize = 14, TextColor3 = Color3.fromRGB(255,255,255), TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Center, Size = UDim2.fromOffset(211,24), Position = UDim2.fromOffset(18,16), BackgroundTransparency = 1, FontFace = Font.fromId(16658254058, Enum.FontWeight.Bold, Enum.FontStyle.Normal)}),
 			}),
@@ -737,27 +737,28 @@ function library.new(name)
 
 				-- titles
 				create("TextLabel", {Text = `{name} | LOADER`, TextColor3 = Color3.fromRGB(255,255,255), TextScaled = true, BackgroundTransparency = 1, Size = UDim2.fromScale(0.358,0.094), Position = UDim2.fromScale(0.03,0.083), ZIndex = 132, FontFace = Font.fromId(16658254058, Enum.FontWeight.Bold, Enum.FontStyle.Normal)}),
-				create("TextLabel", {Text = `Universal`, TextColor3 = Color3.fromRGB(255,255,255), TextScaled = true, BackgroundTransparency = 1, Size = UDim2.fromScale(0.358,0.053), Position = UDim2.fromScale(0.03,0.203), TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 132, FontFace = Font.fromId(12187365364, Enum.FontWeight.SemiBold, Enum.FontStyle.Normal)}),
+				create("TextLabel", {Name = "gameName", Text = `Universal`, TextColor3 = Color3.fromRGB(255,255,255), TextScaled = true, BackgroundTransparency = 1, Size = UDim2.fromScale(0.358,0.053), Position = UDim2.fromScale(0.03,0.203), TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 132, FontFace = Font.fromId(12187365364, Enum.FontWeight.SemiBold, Enum.FontStyle.Normal)}),
 				create("TextLabel", {Text = `Loading Assets...`, TextColor3 = Color3.fromRGB(216, 216, 216), TextScaled = true, BackgroundTransparency = 1, Size = UDim2.fromScale(0.3,0.053), Position = UDim2.fromScale(0.059,0.546), ZIndex = 132,FontFace = Font.fromId(12187365364, Enum.FontWeight.SemiBold, Enum.FontStyle.Normal)}),
 			})
 		}),
 		_items = {},
 	}, library)
-	
+
 	autoResizeList(lib._gui.Main.SidePanel,5)
-	
+
 	makeDraggable(lib._gui.Main)
 	makeDraggable(lib._gui.Loader)
-	
+
 	task.spawn(function()
+		lib._gui.Loader.gameName.Text = "‎ ‎ ‎ ‎ ‎ ‎ "..string.split(game.Name, "@")[1]
 		lib._gui.Main.Profile.Headshot.Title1.Text = localPlayer.Name
 		lib._gui.Main.Profile.Headshot.Image = players:GetUserThumbnailAsync(localPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48)
 	end)
-	
+
 	doOptimalParenting(lib._gui)
-	
+
 	lib:doLoad()
-	
+
 	userinputservice.InputBegan:Connect(function(input, GPE)
 		if not library._settings.binding and not GPE then
 			local inputName = input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode.Name or input.UserInputState.Name
@@ -774,7 +775,7 @@ function library.new(name)
 			end
 		end
 	end)
-	
+
 	lib._gui.Main.SearchBar.Input.Focused:Connect(function()
 		tween(lib._gui.Main.SearchBar, 0.125, {BackgroundColor3 = Color3.fromRGB(70,70,70)})
 		tween(lib._gui.Main.SearchBar.Input, 0.125, {PlaceholderColor3 = Color3.fromRGB(206,206,206), TextColor3 = Color3.fromRGB(206,206,206)})
@@ -787,10 +788,10 @@ function library.new(name)
 		tween(lib._gui.Main.SearchBar.Icon, 0.125, {ImageColor3 = Color3.fromRGB(177,177,177)})
 		tween(lib._gui.Main.SearchBar.UIStroke, 0.125, {Color = Color3.fromRGB(49,49,49)})
 	end)
-	
+
 	lib._gui.Main.SearchBar.Input:GetPropertyChangedSignal("Text"):Connect(function()
 		local text = lib._gui.Main.SearchBar.Input.Text
-		
+
 		for i,v in next, lib._gui.Main.SidePanel:GetChildren() do
 			if v:IsA("TextButton") then
 				if text ~= "" then
@@ -805,13 +806,13 @@ function library.new(name)
 			end
 		end
 	end)
-	
+
 	return lib
 end
 
 function library:doLoad()
 	local loaded = self._gui.Loader
-	
+
 	local t = tween(loaded.Loading.Bar.Fill, 4, {Size = UDim2.fromScale(1,1)})
 	t.Completed:Wait()
 	self._gui.Main.Visible = true
@@ -821,7 +822,7 @@ end
 function library:createPage(name, icon)
 	local sidePanel = self._gui.Main.SidePanel
 	local pages = self._gui.Main.Pages
-	
+
 	local newPage = setmetatable({
 		_lib  = self,
 		_name = name,
@@ -841,9 +842,9 @@ function library:createPage(name, icon)
 		}),
 		_items = {},
 	}, tab)
-	
+
 	newPage._button:SetAttribute("enabled", newPage._page.Visible)
-	
+
 	newPage._button.MouseEnter:Connect(function()
 		if not newPage._button:GetAttribute("enabled") then
 			tween(newPage._button, 0.125, {BackgroundTransparency = 0.6, BackgroundColor3 = Color3.fromRGB(47, 47, 47)})
@@ -875,12 +876,12 @@ function library:createPage(name, icon)
 		tween(newPage._button, .125, {BackgroundTransparency = 0.6, BackgroundColor3 = Color3.fromRGB(104,104,104)})
 		tween(newPage._button:FindFirstChildOfClass("TextLabel"), .125, {TextColor3 = Color3.fromRGB(255,255,255)})
 		tween(newPage._button:FindFirstChildOfClass("ImageLabel"), .125, {ImageColor3 = Color3.fromRGB(255,255,255)})
-		
+
 		newPage._page.Visible = true
 	end)
 
 	self._items[#self._items + 1] = newPage
-	
+
 	return newPage
 end
 
