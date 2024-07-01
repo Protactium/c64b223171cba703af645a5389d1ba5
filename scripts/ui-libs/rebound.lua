@@ -273,7 +273,7 @@ function misc:addSlider(name, callback, options)
 			self._callback(value)
 		end
 	end
-	
+
 	slider._frame.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 and library._settings.dragging == false then
 			library._settings.dragging = true
