@@ -669,7 +669,7 @@ function library.new(name)
 					create("ImageLabel", {Name = "Headshot", Size = UDim2.fromOffset(44,44), Position = UDim2.fromOffset(48,12), BackgroundTransparency = 1}, {
 						create("UICorner", {CornerRadius = UDim.new(1,0)}),
 						create("TextLabel", {Name = "Title1", BackgroundTransparency = 1, Size = UDim2.fromOffset(127,16), Position = UDim2.fromOffset(53,6), TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Center, Text = "ROBLOX", TextColor3 = Color3.fromRGB(255,255,255), TextScaled = true, TextSize = 14}),
-						create("TextLabel", {Name = "Title2", BackgroundTransparency = 1, Size = UDim2.fromOffset(147,14), Position = UDim2.fromOffset(53,23), TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Center, Text = "FREE", TextColor3 = Color3.fromRGB(143,143,143), TextScaled = true, TextSize = 14})
+						create("TextLabel", {Name = "Title2", BackgroundTransparency = 1, Size = UDim2.fromOffset(147,14), Position = UDim2.fromOffset(53,23), TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Center, Text = "Free", TextColor3 = Color3.fromRGB(143,143,143), TextScaled = true, TextSize = 14})
 					})
 				}),
 				
