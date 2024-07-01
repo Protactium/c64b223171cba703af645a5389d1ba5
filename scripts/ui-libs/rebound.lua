@@ -1,3 +1,49 @@
+--[[
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/scripts/ui-libs/rebound.lua"))()
+local ui = lib.new("NAME")
+
+local page = ui:createPage("NAME","ICON")
+local category = page:addCategory("NAME")
+local cell = category:addCell()
+
+cell:addInput("INPUT", function(x)
+	warn(x)
+end)
+
+cell:addSlider("SLIDER", function(x)
+	warn(x)
+end, {min = 1, max = 100, default = 50})
+
+cell:addBind("KEYBIND", function()
+	warn("keybind clicked or something")
+end, {default = Enum.KeyCode.F})
+
+cell:addToggle("TOGGLE", function(x)
+	warn(x)
+end, {default = true})
+
+cell:addButton("NAME", function()
+	warn("button clicked")
+end)
+
+cell:addDropdown("DROPDOWN", function(x)
+	warn(x)
+end, {
+	{
+		Name = "TEST 1",
+		Type = "button",
+	},
+	{
+		Name = "TEST 2",
+		Type = "toggle",
+	},
+	{
+		Name = "TEST 3",
+		Type = "toggle",
+	}
+}, {default = {Name = "TEST 1", Type = "button"}})
+]]
+
 -- services
 local players = game:GetService("Players")
 local userinputservice = game:GetService("UserInputService")
