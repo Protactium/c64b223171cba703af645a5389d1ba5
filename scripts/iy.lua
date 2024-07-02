@@ -10520,14 +10520,7 @@ end)
 addcmd('friend',{},function(args, speaker)
 	local players = getPlayer(args[1], speaker)
 	for i,v in pairs(players)do
-		speaker:RequestFriendship(v)
-	end
-end)
-
-addcmd('unfriend',{},function(args, speaker)
-	local players = getPlayer(args[1], speaker)
-	for i,v in pairs(players)do
-		speaker:RevokeFriendship(v)
+		game.StarterGui:SetCore("PromptSendFriendRequest",v)
 	end
 end)
 
