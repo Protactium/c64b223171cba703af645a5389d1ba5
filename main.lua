@@ -42,17 +42,21 @@ local scripts = {
         end
     }
 }
-
+function getTime()
+    local date = os.date("!*t")
+    return string.format("%02i:%02i", (date.hour + 1) % 24, date.min)
+end
 return function(Type,str)
+
     Type = Type:lower() str = str:lower()
     if Type == "others" then
         if not scripts.others[str] then
-            error("Failed to find string in table, "..str, 5) return
+            warn("["..getTime().."]: Failed to find string in table, "..str) return
         end
         scripts.others[str]()
     else
         if not scripts.gameSpecific[str] then
-            error("Failed to find string in table, "..str, 5) return
+            warn("["..getTime().."]: Failed to find string in table, "..str) return
         end
         scripts.gameSpecific[str]()
     end
