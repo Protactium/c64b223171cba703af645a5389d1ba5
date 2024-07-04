@@ -53,10 +53,13 @@ return function(Type,str)
             warn("["..getTime().."]: Failed to find string in table, "..str) return
         end
         scripts.others[str]()
-    else
+    elseif Type == "gamespecific" or Type == "specificgame" then
         if not scripts.gameSpecific[str] then
             warn("["..getTime().."]: Failed to find string in table, "..str) return
         end
         scripts.gameSpecific[str]()
+    else
+        warn("["..getTime().."]: String '"..Type.."' is invalid!")
+        return
     end
 end
