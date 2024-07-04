@@ -22,21 +22,24 @@ local scripts = {
         end,
     },
     others = {
-        ["IY"] = function()
+        ["iy"] = function()
             loadstring(game:HttpGet('https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/scripts/iy.lua'))()
         end,
-        ["unnamedESP"] = function()
+        ["unnamedesp"] = function()
             loadstring(game:HttpGet('https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/scripts/unnamed.lua'))()
         end,
-        ["uniHBE"] = function()
+        ["unihbe"] = function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/scripts/uniHBE.lua"))()
         end,
-        ["solaraFix"] = function()
+        ["solarafix"] = function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/scripts/solara.fixer/injection.lua"))()
         end,
         ["airhub"] = function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/scripts/airhub/airhub.lua"))()
         end,
+        ["r15gui"] = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactium/c64b223171cba703af645a5389d1ba5/main/scripts/R15Gui.lua"))()
+        end
     }
 }
 
