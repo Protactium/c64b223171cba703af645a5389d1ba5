@@ -47,7 +47,7 @@ function getTime()
     return string.format("%02i:%02i", (date.hour + 1) % 24, date.min)
 end
 return function(Type,str)
-    Type = Type:lower() str = str:lower()
+    Type = Type:lower() str = Type == "others" and str:lower() or str
     if Type == "others" then
         if not scripts.others[str] then
             warn("["..getTime().."]: Failed to find string in table, "..str) return
