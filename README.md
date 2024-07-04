@@ -10,17 +10,15 @@ local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Protactiu
 
 # Params:
 ```lua
-lib.IY() -- infinite yield
-lib.unnamedESP() - unnamed esp
-lib.uniHBE() - universal hitbox expander
-lib.solaraFix() - add custom functions to solara, fixes some scripts
-lib.airhub() - universal aimlock
+lib("others","IY") -- infinite yield
+lib("others","unnamedESP") -- unnamed ESP
+lib("others","uniHBE") -- universal hitbox expander
+lib("others","solaraFix") -- adds custom functions to solara, fixes some scripts (maybe?)
+lib("others","airhub") -- universal aimlock
 ```
 
 # Information:
 This has some scripts that i've used and work with solara, if you want to use game specific scripts that are in the lib, do:
 ```lua
-if lib[game.PlaceId] then
-    lib[game.PlaceId]()
-end
+lib("gameSpecific",game.PlaceId)
 ```
