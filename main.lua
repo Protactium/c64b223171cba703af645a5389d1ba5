@@ -41,5 +41,16 @@ local scripts = {
 }
 
 return function(Type,str)
-    return scripts[Type == "others" and "others" or "gameSpecific"][str]()
+    Type = Type:lower()
+    if Type == "others" then
+        if not scripts.others[str] then
+            error("Failed to find string in table, "..str, 5) return
+        end
+        scripts.others[str]()
+    else
+        if not scripts.gameSpecific[str] then
+            error("Failed to find string in table, "..str, 5) return
+        end
+        scripts.gameSpecific[str]()
+    end
 end
