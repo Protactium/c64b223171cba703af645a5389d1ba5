@@ -43,6 +43,10 @@ local themes = {
 		clickEffect = Color3.fromRGB(46, 39, 63)
 	}
 }
+
+local localPlayer = game:GetService("Players").LocalPlayer
+local mouse = localPlayer:GetMouse()
+
 local themeMeta = setmetatable({
 	items = {}
 }, {
@@ -81,6 +85,70 @@ local function tween(instance, duration, properties, style)
 	return t
 end
 
+local function addMouseEffects(guiObject, normalColour, hoverColour, clickColour)
+	local isMouseDown, isMouseOver = false, false
+	if hoverColour then
+		guiObject.MouseEnter:Connect(function()
+			isMouseOver = true
+			tween(guiObject, 0.2, { BackgroundColor3 = themeMeta[hoverColour] })
+		end)
+		guiObject.MouseLeave:Connect(function()
+			isMouseOver = false
+			if isMouseDown == false then
+				tween(guiObject, 0.2, { BackgroundColor3 = themeMeta[normalColour] })
+			end
+		end)
+	end
+	if clickColour then
+		if guiObject.ClassName == "Frame" then
+			guiObject.InputBegan:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					isMouseDown = true
+					tween(guiObject, 0.2, { BackgroundColor3 = themeMeta[clickColour] })
+					local conn
+					conn = input.Changed:Connect(function()
+						if input.UserInputState == Enum.UserInputState.End then
+							conn:Disconnect()
+							isMouseDown = false
+							tween(guiObject, 0.2, { BackgroundColor3 = isMouseOver and themeMeta[hoverColour] or themeMeta[normalColour] })
+						end
+					end)
+				end
+			end)
+		elseif guiObject.ClassName == "TextButton" then
+			guiObject.MouseButton1Down:Connect(function()
+				isMouseDown = true
+				tween(guiObject, 0.2, { BackgroundColor3 = themeMeta[clickColour] })
+			end)
+			guiObject.MouseButton1Up:Connect(function()
+				isMouseDown = false
+				tween(guiObject, 0.2, { BackgroundColor3 = isMouseOver and themeMeta[hoverColour] or themeMeta[normalColour] })
+			end)
+		end
+	end
+end
+
+local function makeDraggable(library, frame)
+	frame.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 and library._settings.dragging == false then
+			library._settings.dragging = true
+			local offset = Vector2.new(frame.AbsoluteSize.X * frame.AnchorPoint.X, frame.AbsoluteSize.Y * frame.AnchorPoint.Y)
+			local pos = Vector2.new(mouse.X - (frame.AbsolutePosition.X + offset.X), mouse.Y - (frame.AbsolutePosition.Y + offset.Y))
+			local dragConn, conn
+			dragConn = mouse.Move:Connect(function()
+				tween(frame, 0.125, { Position = UDim2.new(0, mouse.X - pos.X, 0, mouse.Y - pos.Y) })
+			end)
+			conn = input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					library._settings.dragging = false
+					dragConn:Disconnect()
+					conn:Disconnect()
+				end
+			end)
+		end
+	end)
+end
+
 local function organiseNotifs(notifDir)
 	local yOffset, notifs = -30, notifDir:GetChildren()
 	for i = #notifs, 1, -1 do
@@ -96,7 +164,7 @@ end
 
 local library = {}
 
-function library:Notify(plr, title, text, theme, options)
+function library:Notify(plr, title, text, theme, options, callback)
 	local mainholder
 	if not getNotificationGui() then
 		mainholder = create("ScreenGui", { Name = "Notifications", Parent = game:GetService("CoreGui"), DisplayOrder = 1000000000, ResetOnSpawn = false }, {
@@ -108,8 +176,14 @@ function library:Notify(plr, title, text, theme, options)
 	themes.selected = theme or "Default"
 	local sizeY, called = textService:GetTextSize(text, 13, Enum.Font.Gotham, Vector2.new(260, math.huge)).Y + 10, false
 	local frame = create("Frame", { Name = "notification", AnchorPoint = Vector2.new(1, 1), BackgroundColor3 = "theme.panelItemBackground", ClipsDescendants = true, Parent = mainholder, Position = UDim2.new(1, 300, 1, -30), Size = UDim2.new(0, 280, 0, sizeY + 34) }, {
-		create("TextLabel", { Name = "title", BackgroundTransparency = 1, Font = Enum.Font.GothamSemibold, Position = UDim2.new(0, 10, 0, 0), Size = UDim2.new(1, -66, 0, 30), Text = title, TextColor3 = "theme.textForeground", TextSize = 14, TextXAlignment = Enum.TextXAlignment.Left }),
+		create("TextLabel", { Name = "title", BackgroundTransparency = 1, Font = Enum.Font.GothamSemibold, Position = UDim2.new(0, 10, 0, 0), Size = UDim2.new(1, -66, 0, 30), Text = "Neutral Notification", TextColor3 = "theme.textForeground", TextSize = 14, TextXAlignment = Enum.TextXAlignment.Left }),
 		create("TextLabel", { Name = "content", AnchorPoint = Vector2.new(0.5, 0), BackgroundTransparency = 1, Font = Enum.Font.GothamSemibold, Position = UDim2.new(0.5, 0, 0, 26), Size = UDim2.new(1, -20, 0, sizeY), Text = text, TextColor3 = "theme.notifTextForeground", TextSize = 13, TextWrapped = true, TextXAlignment = Enum.TextXAlignment.Left }),
+		create("Frame", { Name = "yes", AnchorPoint = Vector2.new(1, 0), BackgroundColor3 = "theme.panelItemBackground", Position = UDim2.new(1, -30, 0, 4), Size = UDim2.new(0, 22, 0, 22) }, {
+			create("ImageLabel", { Name = "icon", AnchorPoint = Vector2.new(0.5, 0.5), BackgroundTransparency = 1, Image = "rbxassetid://7234543866", Position = UDim2.new(0.5, 0, 0.5, 0), Size = UDim2.new(1, 0, 1, 0) })
+		}, UDim.new(0, 4)),
+		create("Frame", { Name = "no", AnchorPoint = Vector2.new(1, 0), BackgroundColor3 = "theme.panelItemBackground", Position = UDim2.new(1, -4, 0, 4), Size = UDim2.new(0, 22, 0, 22) }, {
+			create("ImageLabel", { Name = "icon", AnchorPoint = Vector2.new(0.5, 0.5), BackgroundTransparency = 1, Image = "rbxassetid://7234543609", Position = UDim2.new(0.5, 0, 0.5, 0), Rotation = 45, Size = UDim2.new(1, 0, 1, 0) })
+		}, UDim.new(0, 4)),
 		create("Frame", { Name = "underline", AnchorPoint = Vector2.new(0, 1), BackgroundColor3 = "theme.notifTimeoutHighlight", Position = UDim2.new(0, 0, 1, 0), Size = UDim2.new(0, 0, 0, 6) }, {
 			create("Frame", { Name = "overline", BackgroundColor3 = "theme.notifTimeoutHighlight", BorderSizePixel = 0, Size = UDim2.new(1, 0, 0.5, 0) })
 		}, UDim.new(1, 0))
@@ -121,8 +195,26 @@ function library:Notify(plr, title, text, theme, options)
 			frame:Destroy()
 			organiseNotifs(mainholder)
 		end)
+		if callback then
+			callback(option)
+		end
 	end
 
+	addMouseEffects(frame.yes, "panelItemBackground", nil, "clickEffect")
+	addMouseEffects(frame.no, "panelItemBackground", nil, "clickEffect")
+
+	frame.yes.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			closeNotif(true)
+		end
+	end)
+
+	frame.no.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			closeNotif(false)
+		end
+	end)
+	
 	organiseNotifs(mainholder)
 
 	tween(frame.underline, options and options.timeout or 10, { Size = UDim2.new(1, 0, 0, 6) }, Enum.EasingStyle.Linear).Completed:Connect(function()
